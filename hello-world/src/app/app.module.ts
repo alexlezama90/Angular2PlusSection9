@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -54,7 +54,12 @@ import { AuthorsService } from './authors/authors.service';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [CoursesService, AuthorsService],
+  providers: [
+    // Http,
+    CoursesService, 
+    AuthorsService
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

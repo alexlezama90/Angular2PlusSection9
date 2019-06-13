@@ -24,7 +24,7 @@ import { NewCourseFormBuilderComponent } from './new-course-form-builder/new-cou
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { PostsComponent } from './posts/posts.component';
 import { AuthorsService } from './authors/authors.service';
-import { PostService } from './services/post.service';
+import { PostsService } from './services/post.service';
 
 
 @NgModule({
@@ -59,7 +59,7 @@ import { PostService } from './services/post.service';
     // Http,
     CoursesService, 
     AuthorsService,
-    PostService
+    PostsService
   ],
 
   bootstrap: [AppComponent]

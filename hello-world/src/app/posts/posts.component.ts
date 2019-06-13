@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
+import { PostsService } from '../services/post.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'posts',
@@ -8,49 +9,92 @@ import { Http } from '@angular/http';
 })
 export class PostsComponent implements OnInit {
   posts: any[];
-  private url = 'http://jsonplaceholder.typicode.com/posts'
 
-  constructor(private http: Http) {
-   
-   }
+  constructor(private service: PostsService) {
+
+  }
 
   ngOnInit() {
-    this.http.get(this.url)
-    .subscribe(response => {
-      // console.log(response.json());
-      this.posts = response.json();
-    });
+    this.service.getPosts()
+      .subscribe(
+        response => {
+          // console.log(response.json());
+          this.posts = response.json();
+        },
+        error => {
+          alert('An unexpected error ocurred.');
+          console.log(error);
+        });
   }
 
-  createPost(input: HTMLInputElement){
-    let post = {title: input.value}
+  createPost(input: HTMLInputElement) {
+    let post = { title: input.value }
 
-    this.http.post(this.url, JSON.stringify(post))
-      .subscribe(response=> {
-      post['id'] = response.json().id;
-      this.posts.splice(0, 0, post);
-      console.log(response.json());
-    });
+    this.service.createPost(post)
+      .subscribe(
+        response => {
+          post['id'] = response.json().id;
+          this.posts.splice(0, 0, post);
+          console.log(response.json());
+        },
+        (error: Response) => {
+          if(error.status === 400) {
+            // this.form.setErrors(error.json());
+          } 
+          else{
+            alert('An unexpected error ocurred.');
+            console.log(error);
+          }
 
-    input.value='';
+        });
+
+    input.value = '';
   }
 
-  updatePost(post){
+  updatePost(post) {
     //we use put to update the entire object
     // this.http.put(this.url, JSON.stringify(post));
     //we use patch when we want to update just some properties of an object.
-    this.http.patch(this.url + '/' + post.id, JSON.stringify({isRead: true}))
-      .subscribe(response => {
-      console.log(response.json());
-    });
+    this.service.updatePost(post.id)
+      .subscribe(
+        response => {
+          console.log(response.json());
+        },
+        error => {
+          alert('An unexpected error ocurred.');
+          console.log(error);
+        });
   }
 
-  deletePost(post){
-    this.http.delete(this.url + '/' + post.id)
-      .subscribe(response=> {
-        let index = this.posts.indexOf(post);
-        this.posts.splice(index, 1);
-      })
+  deletePost(post) {
+    this.service.deletePost(345) //post.id
+      .subscribe(
+        response => {
+          let index = this.posts.indexOf(post);
+          this.posts.splice(index, 1);
+        },
+        (error: Response) => {
+          if(error.status === 404)
+            alert('This post has already been deleted.');
+          else{
+            alert('An unexpected error ocurred.');
+            console.log(error);
+          }
+        });
   }
 
+  // deletePost(post) {
+  //   this.service.deletePost(15000)
+  //     .subscribe((response: Object) => {
+  //       let index = this.posts.indexOf(post);
+  //       if (!response.hasOwnProperty(post)) {
+  //         alert('Post does not exist')
+  //         console.error(response);
+  //       }
+  //     },
+  //     (error) => {
+  //       alert('Unexpected error occured.');
+  //       console.log(error)
+  //     })
+  // }
 }

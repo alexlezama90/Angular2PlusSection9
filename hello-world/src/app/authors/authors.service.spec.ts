@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AutorsService } from './autors.service';
+import { AuthorsService } from './authors.service';
 
 describe('AutorsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: AutorsService = TestBed.get(AutorsService);
+    const service: AuthorsService = TestBed.get(AuthorsService);
     expect(service).toBeTruthy();
   });
 });

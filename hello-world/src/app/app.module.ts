@@ -1,13 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './courses.component';
 import { CourseComponent } from './course/course.component';
 import { CoursesService } from './courses.service';
-import { AutorsComponent } from './autors/autors.component';
+import { AuthorsComponent } from './authors/authors.component';
 import { SummaryPipe } from './summary.pipe';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { TitleCasePipe } from './title-case.pipe';
@@ -21,6 +22,8 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
 import { NewCourseFormArrayComponent } from './new-course-form-array/new-course-form-array.component';
 import { NewCourseFormBuilderComponent } from './new-course-form-builder/new-course-form-builder.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { PostsComponent } from './posts/posts.component';
+import { AuthorsService } from './authors/authors.service';
 
 
 @NgModule({
@@ -28,7 +31,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     AppComponent,
     CourseComponent,
     CoursesComponent,
-    AutorsComponent,
+    AuthorsComponent,
     SummaryPipe,
     FavoriteComponent,
     TitleCasePipe,
@@ -41,15 +44,17 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     SignupFormComponent,
     NewCourseFormArrayComponent,
     NewCourseFormBuilderComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpModule
   ],
-  providers: [CoursesService],
+  providers: [CoursesService, AuthorsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
